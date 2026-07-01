@@ -8,6 +8,22 @@
 npx skills add AbsolutelySkilled/AbsolutelySkilled --skill auto-engineer
 ```
 
+Also available as a standalone install outside this monorepo:
+
+```bash
+npx skills add mohitmayank/auto-engineer
+```
+
+## Usage
+
+```bash
+/auto-engineer "Add OAuth2 login with Google and GitHub providers"
+/auto-engineer "Redesign the dashboard to look less like AI slop"
+/auto-engineer "Write a spec for the notifications system, don't build yet"
+/auto-engineer "Run a security audit and fix the flaky CI tests"
+/auto-engineer "Build the user profile feature and write documentation for it"
+```
+
 ## Overview
 
 `auto-engineer` replaces several separate commands with a single adaptive entry point that detects from your prompt which specialization to activate — then loads only the relevant reference files into context.
@@ -32,12 +48,6 @@ Blending is supported — "build this feature and document it" runs ENGINEER the
 - gemini-cli
 - openai-codex
 - mcp
-
-## Recommended Skills
-
-- `writing-plans` — for detailed upfront planning before invoking auto-engineer
-- `code-review-mastery` — for reviewing output after ENGINEER completes
-- `system-design` — companion for architecture-heavy ENGINEER sessions
 
 ## Maintainers
 
