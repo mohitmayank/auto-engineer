@@ -1,0 +1,242 @@
+{
+  "skill": "auto-engineer",
+  "version": "1.0.0",
+  "evals": [
+  {
+    "id": "trigger-engineer-build",
+    "type": "trigger",
+    "description": "Activates ENGINEER specialization on a build request",
+    "input": "Build a user authentication system with JWT tokens and refresh token rotation",
+    "expect": {
+      "mode_announced": "ENGINEER",
+      "enters_plan_mode": true,
+      "first_action": "complexity_triage"
+    }
+  },
+  {
+    "id": "trigger-ui-design",
+    "type": "trigger",
+    "description": "Activates UI specialization on a design request",
+    "input": "Design a pricing page for a SaaS product with three tiers",
+    "expect": {
+      "mode_announced": "UI",
+      "first_action": "aesthetic_direction_chosen",
+      "no_code_before_direction": true
+    }
+  },
+  {
+    "id": "trigger-docs-readme",
+    "type": "trigger",
+    "description": "Activates DOCS specialization on a documentation request",
+    "input": "Write a README for this project",
+    "expect": {
+      "mode_announced": "DOCS",
+      "quadrant_classified": "developer-doc",
+      "outline_gated": true
+    }
+  },
+  {
+    "id": "trigger-blend-engineer-docs",
+    "type": "trigger",
+    "description": "Activates blend mode when prompt spans engineering and docs",
+    "input": "Build the user profile feature and write documentation for it",
+    "expect": {
+      "mode_announced": "ENGINEER → DOCS",
+      "engineer_runs_first": true,
+      "docs_runs_after_converge": true
+    }
+  },
+  {
+    "id": "trigger-maintain-audit",
+    "type": "trigger",
+    "description": "Activates MAINTAIN specialization's AUDIT sub-mode on a security request",
+    "input": "Run a security audit and check for vulnerable dependencies",
+    "expect": {
+      "mode_announced": "MAINTAIN → AUDIT",
+      "first_action": "detect_applicable_tooling",
+      "loads_reference": "references/maintain/audit.md"
+    }
+  },
+  {
+    "id": "trigger-spec-lite",
+    "type": "trigger",
+    "description": "Activates ENGINEER's SPEC-lite mode instead of the full phase-gated pipeline",
+    "input": "Write a spec for the notifications system, don't build it yet",
+    "expect": {
+      "mode_announced": "ENGINEER (SPEC-lite)",
+      "skips_decompose_execute_verify_converge": true,
+      "stops_after_review": true
+    }
+  },
+  {
+    "id": "core-complexity-triage",
+    "type": "core",
+    "description": "Correctly classifies task complexity and announces tier",
+    "input": "Fix a typo in the error message on line 42 of auth.ts",
+    "expect": {
+      "tier": "Trivial",
+      "no_full_interview": true,
+      "no_board_created": true,
+      "single_test_written": true
+    }
+  },
+  {
+    "id": "core-phase-gates",
+    "type": "core",
+    "description": "Stops after INTAKE and waits for user approval before writing spec",
+    "input": "Refactor the payment module to support multiple currencies",
+    "expect": {
+      "stops_after_intake": true,
+      "no_spec_written_before_gate": true,
+      "no_code_before_spec_approved": true
+    }
+  },
+  {
+    "id": "core-dag-decompose",
+    "type": "core",
+    "description": "Produces a dependency-graphed task board for a medium complexity task",
+    "input": "Add real-time notifications using WebSockets to the dashboard",
+    "expect": {
+      "tier": "Medium",
+      "board_written": ".auto-engineer/board.md",
+      "tasks_have_dependencies": true,
+      "mandatory_tail_tasks": ["Self Code Review", "Requirements Validation", "Full Project Verification"]
+    }
+  },
+  {
+    "id": "core-ui-spacing-principles",
+    "type": "core",
+    "description": "Applies 8px grid and spacing scale rules when styling a component",
+    "input": "Style this card component to look more professional",
+    "expect": {
+      "spacing_from_scale": true,
+      "no_arbitrary_px_values": true,
+      "real_icon_library_used": true,
+      "no_emoji_icons": true
+    }
+  },
+  {
+    "id": "core-docs-diataxis-classify",
+    "type": "core",
+    "description": "Correctly classifies document type before writing any prose",
+    "input": "Write a guide for developers on how to add a new payment provider",
+    "expect": {
+      "quadrant_classified": "how-to",
+      "outline_proposed": true,
+      "outline_approved_before_prose": true
+    }
+  },
+  {
+    "id": "core-maintain-debt-one-rule-at-a-time",
+    "type": "core",
+    "description": "MAINTAIN's DEBT sub-mode fixes one lint/type rule per wave, gated, not a mass rewrite",
+    "input": "Fix our lint warnings across the whole repo",
+    "expect": {
+      "mode_announced": "MAINTAIN → DEBT",
+      "fixes_one_rule_per_wave": true,
+      "gate_between_waves": true,
+      "no_blanket_suppression": true
+    }
+  },
+  {
+    "id": "core-maintain-prune-protected-paths",
+    "type": "core",
+    "description": "MAINTAIN's PRUNE sub-mode never deletes generated/vendored paths listed in config",
+    "setup": "preferences.maintain.protectedPaths includes 'dist/**' and a script imports from dist/ dynamically",
+    "input": "Remove unused dependencies and dead code from this repo",
+    "expect": {
+      "mode_announced": "MAINTAIN → PRUNE",
+      "protected_paths_untouched": true,
+      "reversible_waves": true,
+      "devDeps_removed_before_runtime_deps": true
+    }
+  },
+  {
+    "id": "edge-maintain-ambiguous-mode",
+    "type": "edge",
+    "description": "Asks which MAINTAIN sub-mode to run rather than guessing and running all five",
+    "input": "Clean up the repo",
+    "expect": {
+      "asks_which_submode": true,
+      "does_not_run_all_five_submodes": true
+    }
+  },
+  {
+    "id": "edge-ambiguous-prompt",
+    "type": "edge",
+    "description": "Asks one disambiguation question for an ambiguous prompt",
+    "input": "Help me with the dashboard",
+    "expect": {
+      "asks_one_question": true,
+      "does_not_assume_mode": true,
+      "does_not_start_implementation": true
+    }
+  },
+  {
+    "id": "edge-board-resume",
+    "type": "edge",
+    "description": "Resumes from existing board rather than restarting from INTAKE",
+    "setup": "A .auto-engineer/board.md exists with Wave 1 complete and Wave 2 in progress",
+    "input": "Continue the work",
+    "expect": {
+      "reads_board": true,
+      "prints_status_summary": true,
+      "resumes_from_wave_2": true,
+      "does_not_restart_intake": true
+    }
+  },
+  {
+    "id": "edge-migration-loads-playbook",
+    "type": "edge",
+    "description": "Loads migration-playbook reference when work type is migration",
+    "input": "Migrate the database from MongoDB to PostgreSQL",
+    "expect": {
+      "work_type_detected": "Migration",
+      "loads_migration_playbook": true,
+      "asks_about_rollback": true,
+      "asks_about_coexistence_period": true
+    }
+  },
+  {
+    "id": "anti-hallucination-no-premature-code",
+    "type": "anti-hallucination",
+    "description": "Does NOT write implementation code before the spec is approved in ENGINEER mode",
+    "input": "Build a multi-tenant SaaS billing system",
+    "expect": {
+      "no_implementation_before_spec_approved": true,
+      "spec_reviewed_by_separate_agent": true
+    }
+  },
+  {
+    "id": "anti-hallucination-docs-code-verified",
+    "type": "anti-hallucination",
+    "description": "In DOCS mode, verifies every code snippet against the actual codebase",
+    "input": "Write API reference docs for our REST endpoints",
+    "expect": {
+      "reads_source_before_documenting": true,
+      "does_not_invent_endpoints": true,
+      "option_names_copied_from_source": true
+    }
+  },
+  {
+    "id": "references-load-correct-set",
+    "type": "references",
+    "description": "In ENGINEER mode, loads engineering references (not UI, docs, or maintain references)",
+    "input": "Build a background job queue with retry logic",
+    "expect": {
+      "loads": ["references/engineering/intake-playbook.md", "references/engineering/spec-writing.md"],
+      "does_not_load": ["references/ui/typography.md", "references/docs/tutorials.md", "references/maintain/health-engine.md"]
+    }
+  },
+  {
+    "id": "references-load-maintain-set",
+    "type": "references",
+    "description": "In MAINTAIN → DEFLAKE mode, loads the shared health-engine plus only the deflake reference",
+    "input": "Fix the flaky tests in our CI pipeline",
+    "expect": {
+      "loads": ["references/maintain/health-engine.md", "references/maintain/deflake.md"],
+      "does_not_load": ["references/maintain/audit.md", "references/maintain/debt.md", "references/maintain/prune.md", "references/maintain/upgrade.md"]
+    }
+  }
+  ]
+}
